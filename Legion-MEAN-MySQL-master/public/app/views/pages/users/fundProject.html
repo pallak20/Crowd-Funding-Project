@@ -1,0 +1,178 @@
+<style type="text/css">
+
+/*  Braintree Payment Gateway
+form {
+  width: 300px;
+  position: relative;
+  left: 50%;
+  margin-left: -150px;
+  background-color: #eee;
+  padding: 1em;
+  border-radius: 1em;
+  margin-top: 2em;
+}
+
+#card-number {
+  position: relative;
+  height: 2em;
+  border: 1px solid #ddd;
+  padding: 0 0.5em;
+  background-color: white;
+}
+
+#card-number.braintree-hosted-fields-invalid {
+  border-bottom: 2px solid #D0041D;
+}*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,900,700,500);
+
+body {
+  padding: 60px 0px;
+  background-color: #B2D1E5;
+  margin: 0 auto;
+  width: 600px;
+}
+.body-text {
+  padding: 0 20px 30px 20px;
+  font-family: "Roboto";
+  font-size: 1em;
+  color: #fff;
+  text-align: center;
+}
+.form-container {
+  width: 100%;
+}
+.card-wrapper {
+  background-color: #6FB7E9;
+  padding: 10px 0px;
+  width: 100%;
+}
+.personal-information {
+  background-color: #3C8DC5;
+  color: #fff;
+  padding: 1px 0px;
+  text-align: center;
+}
+h1 {
+  font-size: 1.3em;
+  font-family: "Roboto"
+}
+input {
+  margin: 1px 0px;
+  padding-left: 3%;
+}
+input[type="text"]{
+  display: block;
+  height: 50px;
+  width: 97%;
+  border: none;
+}
+input[type="email"]{
+  display: block;
+  height: 50px;
+  width: 97%;
+  border: none;
+}
+input[type="submit"]{
+  display: block;
+  height: 60px;
+  width: 100%;
+  border: none;
+  background-color: #3C8DC5;
+  color: #fff;
+  margin-top: 2px;
+  curson: pointer;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+input[type="submit"]:hover{
+  background-color: #6FB7E9;
+  transition: 0.3s ease;
+}
+#column-left {
+  width: 46.8%;
+  float: left;
+  margin-bottom: 2px;
+}
+#column-right {
+  width: 46.8%;
+  float: right;
+}
+
+@media only screen and (max-width: 480px){
+  body {
+    width: 100%;
+  }
+  .form-container {
+    width: 100%;
+  }
+  h1 {
+    font-size: 1.2em;
+  }
+  input {
+  margin: 2px 0px;
+  }
+  #input-field {
+    width: 100%;
+  }
+  input[type="text"]{
+  height: 40px;
+  }
+  input[type="email"]{
+  height: 40px;
+  }
+  input[type="submit"]{
+  height: 50px;
+  }
+  #column-left {
+    width: 100%;
+    display: block;
+    float: none;
+  }
+  #column-right {
+    width: 100%;
+    display: block;
+    float: none;
+  }
+  #input-button {
+    width: 100%;
+  }
+}
+</style>
+<div class="content-section-a">
+  <!-- Braintree Form -->
+  <!-- <form id="example-form">
+    <div id='card-number'>
+    </div>
+  </form> -->
+  <!-- ******************* -->
+  <form ng-submit='fundProject.fund(cardInfo);'>
+    <div class="form-container">
+      <div class="personal-information">
+        <h1>Payment Information</h1>
+      </div> <!-- end of personal-information -->
+      
+      <input id="input-field" type="text" ng-model="fundProject.cardInfo.address" name="streetaddress" required="required" autocomplete="on" maxlength="45" placeholder="Streed Address"/>
+      <input id="column-left" type="text" ng-model="fundProject.cardInfo.city" name="city" required="required" autocomplete="on" maxlength="20" placeholder="City"/>
+      <input id="column-right" type="text" ng-model="fundProject.cardInfo.zipcode" name="zipcode" required="required" autocomplete="on" pattern="[0-9]*" maxlength="5" placeholder="ZIP code"/>
+      <input id="input-field" type="email" ng-model="fundProject.cardInfo.email" name="email" required="required" autocomplete="on" maxlength="40" placeholder="Email"/>
+    
+        <div class="card-wrapper"></div>
+          <input id="column-left" type="text" ng-model="fundProject.cardInfo.fname" name="first-name" placeholder="First Name"/>
+          <input id="column-right" type="text" ng-model="fundProject.cardInfo.lname" name="last-name" placeholder="Surname"/>
+          <input id="input-field" type="text" ng-model="fundProject.cardInfo.cardno" name="number" placeholder="Card Number"/>
+          <input id="column-left" type="text" ng-model="fundProject.cardInfo.expiry" name="expiry" placeholder="MM / YY"/>
+          <input id="column-right" type="text" ng-model="fundProject.cardInfo.cvc" name="cvc" placeholder="CCV"/>
+          <input id="input-button" type="submit" value="Submit"/>
+      </div>    
+  </form>
+</div>
+
+<div class="loader" ng-show="fundProject.loading">
+        <div id="img1" class="img">
+        </div>
+        <div id="img2" class="img"></div>
+        <div id="img3" class="img"></div>
+        <div id="img4" class="img"></div>
+        <div id="img5" class="img"></div>
+    </div>

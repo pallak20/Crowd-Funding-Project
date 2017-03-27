@@ -1,0 +1,139 @@
+<div class="content-section-a">
+<div class="container-fluid">
+	<div class="row">		
+		<div class="col-sm-12 col-md-12">
+			<div class="row">				
+			<div class="showmore">
+				<div class="col-lg-6">
+					<div class="input-group">
+						<span class="input-group-addon">Results to display:</span>
+						<input type="text" class="form-control" ng-model="number">
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<button type="button" ng-click="exploreProject.showMore(number);" class="btn btn-success">Apply Filter</button>
+				<button type="button" ng-click="exploreProject.showAll();" class="btn btn-warning">Show All</button>				
+			</div>				
+		</div>
+
+		<!-- Filter Search -->
+		<div class="row">
+			<div class="navbar-form">
+				<div class="form-group">
+					<input type="text" name="search" placeholder="Search..." ng-model="searchKeyword" class="form-control">
+				</div>
+			<button type="button" ng-click="exploreProject.search(searchKeyword, number);" class="btn btn-default">Search</button>
+			<button type="button" ng-click="exploreProject.clear();" class="btn btn-default">Clear</button>
+			</div>
+		</div>
+
+		<br/>
+
+		<div class="row">
+			<div class="col-lg-3">
+				<div ng-show="searchFilter !== undefined">
+					<p><strong>Total Results: </strong>{{(exploreProject.users | filter:searchFilter).length}}</p>					
+				</div>
+			</div>	
+			<div class="col-lg-3">
+				<div ng-show="searchFilter !== undefined">
+					<p><strong>Showing: </strong>{{(exploreProject.users | filter:searchFilter | limitTo: exploreProject.limit).length}}</p>
+				</div>
+			</div>
+		</div>			
+
+		<div class="row show-hide-message" ng-show="exploreProject.showMoreError">
+			<div class="alert alert-danger">{{exploreProject.showMoreError}}</div>
+		</div>		
+
+		<div class="row show-hide-message" ng-show="exploreProject.showSuccess">
+			<div class="alert alert-success">{{exploreProject.showSuccess}}</div>
+		</div>	
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Title</th>
+		            <th>Description</th>
+		            <th>Category</th>
+		            <th>Creator</th>		                      
+		            <th>Address</th> 
+		            <th>Fund Goal</th> 
+		            <th>Duration</th>		            
+		            <th>Created On</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-show="exploreProject.noProjects">
+	            	<td colspan="10" style="text-align: center;">No Projects Available</td>
+	          	</tr>
+				<tr ng-repeat="p in projects | pagination: (currentPage - 1) * exploreProject.limit | filter:searchFilter | limitTo: exploreProject.limit">
+					<td>{{p.title}}</td>
+		            <td>{{p.description}}</td>
+		            <td>{{p.category}}</td>
+		            <td>{{p.firstname}} {{p.lastname}}</td>
+		            <td>{{p.address}}</td>
+		            <td>{{p.goal}}</td>
+		            <td>{{p.duration}}</td>		            
+		            <td>{{p.createdAt | date : "MMMM d, y h:mm a"}}</td>
+		            <td>
+		            	<!-- <a href="/fundProject/{{p.projectId}}"><button ng-show="curUser != p.username" type="button" class="btn btn-primary">Fund</button></a> -->
+		            	<button ng-click="exploreProject.showModal(p.projectId);" ng-show="curUser != p.username" type="button" class="btn btn-primary">Fund</button>
+		            </td>
+				</tr>
+				<tr></tr>	
+			</tbody>		
+		</table>
+		<ul uib-pagination total-items="exploreProject.length" items-per-page="exploreProject.limit" ng-model="currentPage"></ul>
+		<br/>
+		<br/>
+
+		<div class="row">
+			<div class="showmore">
+				<div class="col-lg-6">
+					<div class="input-group">
+						<span class="input-group-addon">Results to display:</span>
+						<input type="text" class="form-control" ng-model="number">
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<button type="button" ng-click="exploreProject.showMore(number);" class="btn btn-success">Apply Filter</button>
+				<button type="button" ng-click="exploreProject.showAll();" class="btn btn-warning">Show All</button>				
+			</div>	
+		</div>
+		</div>
+	</div>
+</div>	
+</div>
+<div class="loader" ng-show="exploreProject.loading">
+        <div id="img1" class="img">
+        </div>
+        <div id="img2" class="img"></div>
+        <div id="img3" class="img"></div>
+        <div id="img4" class="img"></div>
+        <div id="img5" class="img"></div>
+    </div>
+
+<div class="modal fade" id="amountModel" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 style="color:#000" class="modal-title">How much would you like to pledge?</h4>
+            </div>
+            <div class="modal-body">
+              $<input type="number" placeholder="$$$" id="amount" ng-model="amount" name="amount">        
+            </div>
+            <div class="modal-footer">
+            	<a href="/fundProject/{{exploreProject.projectId}}_{{amount}}"><button type="button" class="btn btn-primary">Fund</button></a>
+            	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
